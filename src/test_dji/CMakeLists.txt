@@ -20,10 +20,25 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(${PROJECT_NAME}_node src/mbzirc_demo_search.cpp)
+FILE(GLOB SRCS src/*.cpp)
+foreach (src ${SRCS})
+    message(${src})
+    get_filename_component(name ${src} NAME_WE)
 
-target_link_libraries(${PROJECT_NAME}_node
-    ${catkin_LIBRARIES}
-    djiosdk-core.a
-    dji-linker.a
-)
+    add_executable(${name} ${src})
+
+    target_link_libraries(${name}
+        ${catkin_LIBRARIES}
+        djiosdk-core.a
+        dji-linker.a
+    )
+
+endforeach()
+
+# add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp)
+
+# target_link_libraries(${PROJECT_NAME}_node
+#     ${catkin_LIBRARIES}
+#     djiosdk-core.a
+#     dji-linker.a
+# )
